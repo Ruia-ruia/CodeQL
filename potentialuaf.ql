@@ -1,5 +1,5 @@
 import cpp
-from Constructor n_constructor, PointerType ptr_type, Class my_class, NewExpr new, 
+from PointerType ptr_type, Class my_class, NewExpr new, 
 MemberFunction mf, DeleteExpr de, MemberVariable mv, Function f
 
 where mf.getAParameter().getType() = ptr_type
