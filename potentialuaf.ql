@@ -1,6 +1,8 @@
 import cpp
+
 from PointerType ptr_type, Class my_class, NewExpr new, 
-MemberFunction mf, DeleteExpr de, MemberVariable mv, Function f
+MemberFunction mf, DeleteExpr de, MemberVariable mv, 
+Function f
 
 where mf.getAParameter().getType() = ptr_type
 and mv.getAnAssignedValue() = mf.getAParameter().getAnAccess()
@@ -11,5 +13,9 @@ and not de.getEnclosingFunction().getEnclosingElement() = my_class
 and not f = mf 
 and f.accesses(mv)
 and de.getEnclosingFunction().getACallToThisFunction().getASuccessor*() = f.getACallToThisFunction()
+and not exists(AssignExpr ae | ae.getAnOperand() = mv.getAnAccess() 
+  				and de.getEnclosingFunction().getACallToThisFunction().getASuccessor*() = ae
+				| ae.getASuccessor*() = f.getACallToThisFunction())
+
 
 select mf, mf.getACallToThisFunction(), ptr_type, mv, de, de.getEnclosingFunction(), f.getACallToThisFunction()
